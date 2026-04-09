@@ -168,3 +168,4 @@ def closest_color_name(rgb):
             dist, best = d, name
 
     return best
+
