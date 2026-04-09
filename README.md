@@ -103,3 +103,4 @@ JWT_SECRET=your_long_secret_here
 
 > Note: the backend CORS config currently allows `http://localhost:3001`, so keep the client on that port.
  
+
