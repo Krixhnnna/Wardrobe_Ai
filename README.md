@@ -1,4 +1,4 @@
-# Krishna's Wardrobe AI
+# Wardrobe AI
 
 A full‑stack **AI wardrobe + outfit recommender**:
 - Upload clothing → stored in Cloudinary and saved to MongoDB.
