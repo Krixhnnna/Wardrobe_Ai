@@ -102,3 +102,4 @@ JWT_SECRET=your_long_secret_here
 - Vision health: `http://localhost:8000/health`
 
 > Note: the backend CORS config currently allows `http://localhost:3001`, so keep the client on that port.
+ 
