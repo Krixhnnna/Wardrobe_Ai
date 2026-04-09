@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pydantic
+torch
+torchvision
+git+https://github.com/openai/CLIP.git
+requests
+Pillow
+numpy
+scikit-learn
