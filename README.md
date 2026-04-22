@@ -8,7 +8,6 @@ A full‑stack **AI wardrobe + outfit recommender**:
 
 ---
 
-## Demo (Local)
 
 ### What you can do
 - Sign up / log in (cookie-based auth)
