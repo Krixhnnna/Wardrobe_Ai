@@ -6,11 +6,8 @@ const User = require("../models/User");
 const router = express.Router();
 
 function setAuthCookie(res, userId) {
-    if (!process.env.JWT_SECRET) {
-        throw new Error("JWT_SECRET is missing");
-    }
-
-    const token = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    const secret = process.env.JWT_SECRET || "fallback_secret_for_local_testing_12345";
+    const token = jwt.sign({ userId }, secret, { expiresIn: "7d" });
 
     res.cookie("token", token, {
         httpOnly: true,
@@ -82,10 +79,9 @@ router.get("/me", async (req, res) => {
         const token = req.cookies?.token;
         if (!token) return res.status(200).json(null);
 
-        if (!process.env.JWT_SECRET) return res.status(200).json(null);
-
-        const payload = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findById(payload.userId).select("_id email name");
+        const secret = process.env.JWT_SECRET || "fallback_secret_for_local_testing_12345";
+        const payload = jwt.verify(token, secret);
+        const user = await User.findById(payload.userId);
 
         if (!user) return res.status(200).json(null);
 

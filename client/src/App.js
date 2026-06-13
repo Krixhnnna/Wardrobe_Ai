@@ -2,7 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
 function App() {
-  const API_BASE = process.env.REACT_APP_API_BASE || "";
+  const API_BASE = process.env.REACT_APP_API_BASE || 
+    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
+      ? "http://localhost:3000" 
+      : "");
 
   const COLOR_OPTIONS = [
     "black","white","grey","gray","charcoal","navy","blue","denim","indigo",

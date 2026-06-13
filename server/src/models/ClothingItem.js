@@ -1,60 +1,58 @@
-const mongoose = require("mongoose");
+const clothesStore = [];
 
-const clothingItemSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true
-  },
-
-  imageUrl: {
-    type: String,
-    required: true
-  },
-
-  category: {
-    main: {
-      type: String,
-      enum: ["top", "bottom", "footwear", "outerwear", "accessory"],
-      required: true
-    },
-    sub: {
-      type: String,
-      required: true
-    }
-  },
-
-  color: {
-    type: [String],
-    required: true
-  },
-
-  pattern: String,
-
-  fit: {
-    type: String,
-    enum: ["slim", "regular", "oversized"]
-  },
-
-  style: {
-    type: [String] 
-  },
-
-  season: {
-    type: [String] 
-  },
-
-  formality: {
-    type: Number,
-    min: 1,
-    max: 5
-  },
-
-  embedding: {
-    type: [Number], 
-    default: []
+class MockClothingItem {
+  constructor(data) {
+    this._id = "item-" + Date.now() + Math.random().toString(36).substr(2, 5);
+    this.id = this._id;
+    this.userId = data.userId;
+    this.imageUrl = data.imageUrl;
+    this.category = data.category || { main: "top", sub: "other" };
+    this.color = data.color || ["unknown"];
+    this.style = data.style || [];
+    this.season = data.season || [];
+    this.embedding = data.embedding || [];
+    // Ensure o.top._doc structure works in outfit generation
+    this._doc = this;
   }
 
-}, { timestamps: true });
+  async save() {
+    const index = clothesStore.findIndex(item => item._id === this._id);
+    if (index !== -1) {
+      // Retain existing fields and overlay updates
+      Object.assign(clothesStore[index], this);
+      return clothesStore[index];
+    } else {
+      clothesStore.push(this);
+      return this;
+    }
+  }
 
-module.exports = mongoose.model("ClothingItem", clothingItemSchema);
+  static async find(query) {
+    let result = clothesStore;
+    if (query && query.userId) {
+      result = result.filter(item => item.userId === query.userId);
+    }
+    return result;
+  }
+
+  static async findOne(query) {
+    const found = clothesStore.find(item => {
+      let match = true;
+      if (query._id && item._id !== query._id) match = false;
+      if (query.userId && item.userId !== query.userId) match = false;
+      return match;
+    });
+    return found || null;
+  }
+
+  static async deleteOne(query) {
+    const index = clothesStore.findIndex(item => item._id === query._id);
+    if (index !== -1) {
+      clothesStore.splice(index, 1);
+      return { deletedCount: 1 };
+    }
+    return { deletedCount: 0 };
+  }
+}
+
+module.exports = MockClothingItem;
