@@ -9,6 +9,8 @@ const app = require("../server/src/app");
 const connectDB = require("../server/src/config/db");
 
 // Establish connection to MongoDB Atlas or local DB (using connection caching in Mongoose)
-connectDB();
+connectDB().catch(err => {
+  console.error("Initial database connection error:", err);
+});
 
 module.exports = app;
