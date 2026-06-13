@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./App.css";
 
 function App() {
-  const API_BASE = "http://localhost:3000";
+  const API_BASE = process.env.REACT_APP_API_BASE || "";
 
   const COLOR_OPTIONS = [
     "black","white","grey","gray","charcoal","navy","blue","denim","indigo",

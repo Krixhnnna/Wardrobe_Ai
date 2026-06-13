@@ -49,7 +49,8 @@ router.post(
       // Call Vision AI safely (do not fail upload if AI is down)
       let aiData;
       try {
-        const visionResponse = await axios.post("http://127.0.0.1:8000/analyze", {
+        const visionUrl = `${process.env.VISION_SERVICE_URL || "http://127.0.0.1:8000"}/analyze`;
+        const visionResponse = await axios.post(visionUrl, {
           image_url: imageUrl, // ai-service expects this
           imageUrl,            // keep for compatibility
         });
