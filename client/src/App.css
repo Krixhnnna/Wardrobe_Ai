@@ -70,9 +70,11 @@ body {
 .glass-card::after, 
 .outfit-card-enhanced::before, 
 .outfit-card-enhanced::after,
-.scanlines::before,
-.holographic {
+.scanlines::before {
   display: none !important;
+}
+
+.holographic {
   background: none !important;
   animation: none !important;
   box-shadow: none !important;
