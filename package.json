@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Root configuration for Wardrobe AI monorepo on Vercel",
   "private": true,
+  "scripts": {
+    "start:client": "PORT=3001 npm start --prefix client",
+    "start:server": "node server/src/server.js"
+  },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "axios": "^1.13.2",
